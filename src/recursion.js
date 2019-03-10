@@ -5,12 +5,45 @@
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
 var factorial = function(n) {
+  //create a factorial from 5 to 1
+  //start at 5
+  if(n < 0){
+    return null;
+  } else if (n === 0) {
+    return 1;
+  } else {
+    return (n * factorial(n - 1));
+  
+  }
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
 var sum = function(array) {
+  
+  
+  //add the numbers in the array together
+  if(!array.length) return 0;
+  
+  
+  
+    return array[0] + sum(array.slice(1));
+    
+  
 };
+  
+  //add the sums in the array
+  //start with the first index if num return num = num + i
+  //console.log(array);
+  //console.log(array[i]);
+  //if(typeof array.index === 'number'){
+    //console.log(array.index);
+    //return sum +=
+  //}
+
+    // return sum;
+
+
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
@@ -19,17 +52,61 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  //given n
+  
+  var stop = n;
+  if(n < 0) {
+    stop = n * -1;
+  }
+  if(stop === 0) return true;
+  if(stop === 1) return false;
+  
+  //is n divisible by 2
+  //with a remainder 0
+  //every 2nd number is even
+  //check for numbers bigger than the stack
+   return isEven(stop -2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  var start = n;
+  if (start === 0) return 0;
+  //control for negative numbers
+  if (n < 0) {
+    return (start + 1) + sumBelow(start + 1);
+  }
+  
+  
+  return (start-1) + sumBelow(start - 1);
+  
+  
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y) {
+  // given two numbers
+  //return the range in an array between the two numbers
+  //
+  var rangeArray = [];
+  var start = x;
+  var stop = y;
+  if (start === stop -1 || start === stop || start -1 === stop) {
+    return rangeArray;
+  }
+  
+  //when start strictly equals stop return
+  if( stop < start){
+    rangeArray.push(start - 1);
+    return rangeArray.concat(range(start - 1, stop));
+  } else {
+  
+    rangeArray.push(start + 1);
+  return rangeArray.concat(range(start + 1, stop));
+}
 };
 
 // 7. Compute the exponent of a number.
@@ -38,21 +115,69 @@ var range = function(x, y) {
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
-};
+  // compute the exponent of a number
+  // exponent is the base multiplied by itself a certain number of times
+  // stop multiplying when base is multiplied certain number of times
+  if( exp === 0){
+    return 1;
+  } else if( exp > 0){
+    return base * exponent(base, exp -1);
+} else {
+  return 1 / (base * exponent(base, -1 * exp -1));
+}
+  };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  //check to see if n divided by 2 gives remainder 0
+  if(n === 1){
+    return true;
+  }
+  //control for n equals 0
+  //when n gives you a remainder of 2 
+  if(n === 0 || n % 2 === 1){
+    return false;
+  }
+  //evaluate n divide 2 if you factor it down and get 1 true
+  // 4/2 = 2/2 = 1 or 8/2 = 4/2= 2/2 = 1
+  //10/2 = 5/2 = 2.5/2=1.25 will never evaluate to 1
+  
+  return powerOfTwo(n/2);
 };
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
+  // take a string and reverse it 
+  // so string [0] becomes final string
+  // reverse the strings
+  // replace position 1 with the last position
+  if(!string.length){
+    return "";
+  } else {
+    return reverse(string.substr(1)) + string.charAt(0);
+    }
+  
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  //once there are no more strings
+  //start from the end of the string to the beginning
+  string = string.toUpperCase();
+  //control for the spaces
+  string = string.replace(/\s/g, "");
+  if(!string.length){
+    //control for UpperCase and Lower case
+    string.toUpperCase();
+    return true;
+    }
+    if(string[0] === string[string.length - 1]){
+      return palindrome(string.slice(1, string.length -1));
+    }
+    return false;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -65,7 +190,23 @@ var modulo = function(x, y) {
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
+// add x y times
+// add x the number of times y exists
+//sum = sum + =
 var multiply = function(x, y) {
+  
+  var input1 = x;
+  var input2 = y;
+  if(input1 === 0, input2 === 0){
+    return 0;
+    
+  } else if (input2 < 0){
+    return -input1 + multiply(input1, input2 + 1);
+  } else {
+  
+  return input1 + multiply(input1, input2 - 1);
+  }
+  
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
@@ -86,22 +227,74 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
+
 var compareStr = function(str1, str2) {
+  //compare the characters in the string to the other characters in a string
+  //base case if we get to the end of the string str1.length === 0 || str2.length === 1)
+  //when the lengths are the same or there is no length the base case has been met
+   if(str1.length === 0 && str2.length === 0) return true;
+   //now the first comparison of the first letter begins
+   
+   if(str1.charAt(0) === str2.charAt(0)) {
+     //use the slice method to compare each character in the string
+   return compareStr(str1.slice(1), str2.slice(1));
+   }
+   return false;
 };
+          
+     
+   
+   
+  //return compareStr(str1, str2);
+    //compare the characters in order
+    //return the comparison
+  
+  //return the function within itself
+ //return compareStr(str1.localeCompare(str2);
+
+//};
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
+  //make an array from a string
+  var stringedArray = [];
+  //where as index zero represents the first letter of the string
+  //base case is when there is no more letters in the string to push in the array stop the action
+  if(str.length === 0) return stringedArray;
+  //push each character into the array starting at the 0 index of the string
+  //this will match the 0 index of the new stringedArray
+  stringedArray.push(str[0]);
+  //use substring to push each subsequent letter into the array
+  stringedArray = stringedArray.concat(createArray(str.substr(1)));
+  return stringedArray;
+  
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function (array) {
+  //put the last index of an array into the first index of a new array
+  var reversedArray = [];
+  //base case is when the length of the array is 0 or all the indices are in the new array -- stop
+  if(array.length === 0) return reversedArray;
+  reversedArray.push(array.pop());
+  reversedArray = reversedArray.concat(reverseArr(array.slice(0)));
+  //reversedArray = reverseArr(array.slice(1).concat.reverseArr[0]);
+  //array.length - 1
+  //return the new array
+  return reversedArray;
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  //make an array with duplicate values at each index up to the length of the index
+ var arrayOfDuplicateValues = [];
+ //base case -once the length or number of duplicates has been reached the action should stop
+ 
+ 
+ //push value in array n times
 };
 
 // 19. Count the occurence of a value inside a list.
